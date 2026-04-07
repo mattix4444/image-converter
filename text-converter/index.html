@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="ff53016c-839b-4506-8955-e2a95dd728aa" data-blockingmode="auto" type="text/javascript"></script>
+
+    <!--AdSense-->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5287091287037587"
+     crossorigin="anonymous"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0S8B0Y6VD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-D0S8B0Y6VD');
+    </script>
+    <link rel="icon" href="assets/Logo.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Converter | Your simple converter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Convert files online for free. Images (JPG, PNG, WEBP), text (TXT, MD, HTML, CSV, JSON), video (MP4, WEBM). 100% client-side, no uploads. Fast and secure.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <style>
+        /* ── Type tabs ── */
+        .type-tabs {
+            display: flex;
+            gap: 2px;
+            margin-bottom: 24px;
+        }
+        .type-tab {
+            flex: 1;
+            padding: 10px 0;
+            background: transparent;
+            border: 1px solid var(--border, #333);
+            color: var(--text, #ccc);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+        }
+        .type-tab:first-child { border-radius: 2px 0 0 2px; }
+        .type-tab:last-child  { border-radius: 0 2px 2px 0; }
+        .type-tab.active {
+            background: var(--accent, #e0e0e0);
+            color: #000;
+            border-color: var(--accent, #e0e0e0);
+        }
+        .type-tab:hover:not(.active) {
+            background: rgba(255,255,255,0.06);
+        }
+
+        /* ── Video warning banner ── */
+        .video-notice {
+            display: none;
+            margin-top: 12px;
+            padding: 10px 14px;
+            border: 1px solid #555;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #aaa;
+            letter-spacing: 0.05em;
+            line-height: 1.6;
+        }
+        .video-notice.visible { display: block; }
+        .video-notice strong { color: #ddd; }
+
+        /* ── Progress bar (repurposed) ── */
+        #upload-progress {
+            display: none;
+            width: 100%;
+            height: 3px;
+            margin-top: 16px;
+            appearance: none;
+            border: none;
+            background: #222;
+        }
+        #upload-progress::-webkit-progress-bar { background: #222; }
+        #upload-progress::-webkit-progress-value { background: var(--accent, #e0e0e0); transition: width 0.3s; }
+        #upload-progress.visible { display: block; }
+
+        /* ── Converting spinner label ── */
+        .converting-label {
+            display: none;
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: #888;
+            letter-spacing: 0.1em;
+            margin-top: 8px;
+            text-align: center;
+        }
+        .converting-label.visible { display: block; }
+    </style>
+</head>
+<body style="width: 100%;">
+    <div class="noise"></div>
+
+    <header>
+        <h1 class="logo" style="padding-bottom: 0px; font-weight: 100;"><span style="color: #f5a623;">TEXT</span> CONVERTER</h1>
+        <div class="seo-hidden">
+            <h2>Free Online File Converter — Images, Text & Video</h2>
+            <p>Convert images, text files and videos entirely in your browser. No uploads, no accounts, no limits.</p>
+            <ul>
+                <li>Convert JPG to PNG, WEBP, GIF, BMP</li>
+                <li>Convert TXT to MD, HTML, CSV, JSON</li>
+                <li>Convert MP4 to WEBM (client-side via MediaRecorder)</li>
+                <li>100% client-side — your files never leave your device</li>
+            </ul>
+        </div>
+        <div class="tagline" style="display: flex; justify-content: left; align-items: center;">
+            <p style="height: 100%;">convert your file in safe.</p>
+            <button class="btn-about" onclick="change_about()" style="width: 50%; margin-left: auto; height: 40px;">
+                about this
+            </button>
+        </div>
+    </header>
+
+    <div class="about" id="about" style="display: none;">
+        <button class="out-button" onclick="change_about()" aria-label="Close">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="8" y1="8" x2="24" y2="24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="24" y1="8" x2="8" y2="24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+        </button>
+        <section class="about__content">
+            <div class="about__header">
+                <span class="about__label">YOUR SIMPLE CONVERTER — ABOUT THIS</span>
+            </div>
+            <div class="about__layout">
+                <div class="about__grid">
+                    <article class="about__block">
+                        <span class="about__num">01</span>
+                        <h2 class="about__title">What is this?</h2>
+                        <p class="about__body">
+                            A no-frills file converter. Images, text, video — all in your browser.
+                            Built to be fast and invisible — it just works.
+                            Yes, this section exists only because of SEO. You're welcome, Google.
+                        </p>
+                    </article>
+                    <article class="about__block">
+                        <span class="about__num">02</span>
+                        <h2 class="about__title">Why not the others?</h2>
+                        <ul class="about__list">
+                            <li><span class="about__tag">FREE</span> No limits, no paywall, no nonsense.</li>
+                            <li><span class="about__tag">SIMPLE</span> Drop. Pick format. Done.</li>
+                            <li><span class="about__tag">PRIVATE</span> 100% client-side. Your files never leave your machine.</li>
+                        </ul>
+                    </article>
+                    <article class="about__block">
+                        <span class="about__num">03</span>
+                        <h2 class="about__title">Who made it?</h2>
+                        <p class="about__body">
+                            Built in Italy by <strong>Mattia Fabbri</strong> — young, aspiring entrepreneur, apparently also an SEO victim.
+                        </p>
+                    </article>
+                </div>
+                <div class="about__dog" style="text-align: center; width: 30%;">
+
+                    <img src="../assets/Fuffi.jpeg" alt="My dog" class="about__dog-img" />
+                    Fuffi - my dog
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <main>
+
+        <!-- ── File type selector tabs ── -->
+        <div class="type-tabs" role="tablist" aria-label="File type">
+            <a href="../image-converter/" class="type-tab active" data-type="image" role="tab" aria-selected="true"  style="text-decoration: none; text-align: center;">🖼 Image</a>
+            <a href="../text-converter/"  class="type-tab"        data-type="text"  role="tab" aria-selected="false" style="text-decoration: none; text-align: center;">📄 Text</a>
+            <a href="../video-converter/" class="type-tab"        data-type="video" role="tab" aria-selected="false" style="text-decoration: none; text-align: center;">🎬 Video</a>
+        </div>
+
+        <!-- ── Drop zone ── -->
+        <div id="drop-zone" class="drop-zone" role="region" aria-label="File drop zone">
+            <div class="drop-zone__inner">
+                <div class="drop-zone__icon">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                        <path d="M24 4L24 32M24 4L14 14M24 4L34 14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6 36V40C6 42.2 7.8 44 10 44H38C40.2 44 42 42.2 42 40V36" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <p class="drop-zone__text">Drag your file here</p>
+                <p class="drop-zone__sub">or</p>
+                <button type="button" id="upload-button" class="btn-primary">Choose file</button>
+                <p class="drop-zone__formats" id="accepted-formats">JPG · PNG · WEBP · GIF · BMP · SVG</p>
+            </div>
+        </div>
+
+        <p id="upload-status" class="status-message" aria-live="polite"></p>
+
+        <!-- ── Video conversion notice ── -->
+        <div class="video-notice" id="video-notice">
+            <strong>Note on video conversion:</strong> Video is re-encoded entirely in your browser using the MediaRecorder API.
+            Quality and speed depend on your device. Large files may take a while.
+            Supported output: <strong>WEBM</strong> (VP8/Opus). Browser support varies — Chrome/Edge work best.
+        </div>
+
+        <div id="file-preview"></div>
+        <input type="file" id="file-input" hidden accept="image/*"/>
+
+        <!-- ── Convert card ── -->
+        <div id="convert-card" class="convert-card" hidden>
+            <div class="convert-card__file">
+                <span class="convert-card__icon">◈</span>
+                <span id="convert-filename" class="convert-card__name">—</span>
+            </div>
+            <div class="convert-card__arrow">→</div>
+            <div class="convert-card__controls">
+                <label for="format-select" class="visually-hidden">Output format</label>
+                <div class="select-wrapper">
+                    <select id="format-select">
+                        <option value="png">PNG</option>
+                        <option value="jpeg">JPEG</option>
+                        <option value="webp">WEBP</option>
+                        <option value="bmp">BMP</option>
+                        <option value="gif">GIF</option>
+                    </select>
+                    <span class="select-arrow">▾</span>
+                </div>
+            </div>
+            <button type="button" id="convert-button" class="btn-convert">
+                <span>Convert</span>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+
+        <progress id="upload-progress" value="0" max="100"></progress>
+        <p class="converting-label" id="converting-label">converting… please wait</p>
+
+    </main>
+    <div>
+
+    </div>
+    <footer style="width: 100%; text-align: center;">
+        <span>100% client-side — no files are uploaded to servers</span>
+    <script>
+    (function(osoba){
+    var d = document,
+        s = d.createElement('script'),
+        l = d.scripts[d.scripts.length - 1];
+    s.settings = osoba || {};
+    s.src = "\/\/sophisticatedpin.com\/bEX.VGs\/drGjlv0cYGWEcd\/qekmh9SuhZ\/UClMkDPNTVYB5\/MMz\/Yv2GMAjuk\/t\/Nhj\/kOz\/NMj-Yyz\/Mhwe";
+    s.async = true;
+    s.referrerPolicy = 'no-referrer-when-downgrade';
+    l.parentNode.insertBefore(s, l);
+    })({})
+    </script>
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5287091287037587"
+        crossorigin="anonymous"></script>
+    <!-- DownBar -->
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-5287091287037587"
+        data-ad-slot="1349754659"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    </footer>
+
+    <script src="backend.js"></script>
+</body>
+</html>
