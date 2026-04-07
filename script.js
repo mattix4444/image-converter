@@ -31,7 +31,6 @@ function init() {
     activeType = "text"
   }
 
-  console.log(title.textContent)
 
   typeTabs.forEach(tab => {
     const isActive = tab.dataset.type === activeType
