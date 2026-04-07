@@ -29,7 +29,8 @@ function init() {
   }
   else if (title.textContent.includes("text")) {
     activeType = "text"
-  }  else if (title.textContent.includes("image")) {
+  }  
+  else if (title.textContent.includes("image")) {
     activeType = "image"
   }
 
