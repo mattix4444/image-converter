@@ -67,7 +67,6 @@ header {
     letter-spacing: -1px;
     color: var(--text);
     width: 100%;
-    /* accent underline */
     background: linear-gradient(90deg, var(--accent) 0%, transparent 0%) no-repeat left bottom;
     background-size: 0% 3px;
     padding-bottom: 6px;
@@ -276,47 +275,45 @@ main {
     font-size: 12px;
 }
 
-
+/* ---- About button ---- */
 .btn-about {
+    opacity: 0;
     animation: fadeUp 0.5s 0.6s ease forwards;
+    display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
-    border-color: rgba(245, 166, 35, 1);
-    color: rgba(245, 166, 35, 1);
+    border: 1px solid var(--accent);
+    color: var(--accent);
     background: none;
-    border-width: 1px;
-    border-style: solid;
     font-family: var(--font-mono);
     font-size: 10px;
     font-weight: 400;
     letter-spacing: 3px;
     text-transform: uppercase;
     cursor: pointer;
-    transition: background var(--transition), gap var(--transition);
+    transition: background 0.1s, color 0.1s;
     flex-shrink: 0;
-    height: 100%;
-    align-self: stretch;
-    width: 100%;
-    height: 50px;
-    transition-duration: 0.1s;
+    width: 50%;
+    height: 40px;
     border-radius: 50px;
+    margin-left: auto;
 }
 
 .btn-about:hover {
-    background: rgba(245, 166, 35, 1);
-    gap: 12px;
-    color: rgba(0, 0, 0, 1);
-
+    background: var(--accent);
+    color: #000;
 }
 
 .btn-about:active {
     transform: scale(0.98);
 }
-/* Convert button */
 
-
+/* ---- Convert button ---- */
 .btn-convert {
+    display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     background: var(--accent);
     color: #000;
@@ -330,7 +327,6 @@ main {
     cursor: pointer;
     transition: background var(--transition), gap var(--transition);
     flex-shrink: 0;
-    border-left: none;
     height: 100%;
     align-self: stretch;
 }
@@ -377,79 +373,49 @@ footer {
     white-space: nowrap;
 }
 
+.seo-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 @keyframes fadeUp {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* ---- Responsive ---- */
-@media (max-width: 600px) {
-    .convert-card {
-        flex-wrap: wrap;
-    }
-    .convert-card__file {
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-        width: 100%;
-    }
-    .convert-card__arrow { display: none; }
-    .convert-card__controls { padding: 12px 16px; }
-    .btn-convert { width: 100%; justify-content: center; }
-}
-
-@media (max-width: 626px) {
-    .about__dog{
-        font-size: 14px;
-    }
-}
-
-@media (max-width: 460px) {
-    .about__dog{
-        font-size: 10px;
-    }
-}
-
-
-
-.about{
-    z-index: 100;
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.4);
-    width: 100%;
-    height: 100%;
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    backdrop-filter: blur(10px);
-    box-shadow: 0px 0px 50px rgba(0, 0, 0, 1);
-}
+/* ============================================================
+   ABOUT OVERLAY — fixed, always covers full viewport
+   ============================================================ */
 
 .about {
-    z-index: 100;
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 100%;
-    height: 100%;
-    font-size: 20px;
+    position: fixed;        /* ← copre sempre tutta la viewport */
+    inset: 0;               /* top/right/bottom/left: 0 */
+    z-index: 200;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     display: flex;
     justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(10px);
-
-    /* bloom verso l'interno */
+    align-items: flex-start; /* flex-start così su mobile si scrolla */
+    overflow-y: auto;
+    padding: 60px 24px 60px;
     box-shadow:
-        inset 0 0 80px rgba(245, 166, 35, 0.08),
-        inset 0 0 200px rgba(0, 0, 0, 0.6);
+        inset 0 0 80px rgba(245, 166, 35, 0.06),
+        inset 0 0 200px rgba(0, 0, 0, 0.5);
 }
 
-
-/* ---- About overlay ---- */
+/* ---- About content card ---- */
 .about__content {
-    width: min(800px, 90vw);
-    transform: translateY(-20px);
-    animation: fadeUp 0.4s 0.05s ease forwards;
+    width: min(800px, 100%);
     opacity: 0;
+    transform: translateY(-16px);
+    animation: fadeUp 0.35s 0.05s ease forwards;
 }
 
 .about__header {
@@ -469,7 +435,8 @@ footer {
 .about__layout {
     display: flex;
     align-items: flex-start;
-    gap: 56px;
+    gap: 48px;
+    flex-wrap: wrap;
 }
 
 .about__grid {
@@ -477,7 +444,7 @@ footer {
     flex-direction: column;
     gap: 32px;
     flex: 1;
-    min-width: 0;
+    min-width: 260px;
 }
 
 .about__block {
@@ -533,7 +500,11 @@ footer {
 
 .about__dog {
     flex-shrink: 0;
-    width: 200px;
+    width: 180px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
 }
 
 .about__dog-img {
@@ -545,18 +516,19 @@ footer {
     filter: grayscale(20%);
     transition: filter var(--transition);
     display: block;
+    margin-bottom: 8px;
 }
 
 .about__dog-img:hover {
     filter: grayscale(0%);
 }
 
-/* ---- Out button ---- */
+/* ---- Close button ---- */
 .out-button {
-    position: absolute;
-    top: 28px;
-    right: 32px;
-    background: none;
+    position: fixed;    /* fixed così rimane visibile anche scrollando */
+    top: 24px;
+    right: 28px;
+    background: rgba(14,14,14,0.8);
     border: 1.5px solid var(--border-hi);
     border-radius: 50%;
     width: 44px;
@@ -566,71 +538,69 @@ footer {
     justify-content: center;
     color: var(--muted);
     cursor: pointer;
-    transition: border-color var(--transition), color var(--transition);
-    z-index: 101;
+    transition: border-color var(--transition), color var(--transition), background var(--transition);
+    z-index: 201;
 }
 
 .out-button:hover {
     border-color: var(--text);
     color: var(--text);
+    background: rgba(30,30,30,0.9);
 }
 
 /* ---- Responsive ---- */
+@media (max-width: 600px) {
+    .convert-card {
+        flex-wrap: wrap;
+    }
+    .convert-card__file {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        width: 100%;
+    }
+    .convert-card__arrow { display: none; }
+    .convert-card__controls { padding: 12px 16px; }
+    .btn-convert { width: 100%; justify-content: center; }
+}
 
-/* Tablet: foto sopra il testo, centrata */
 @media (max-width: 720px) {
+    .about {
+        padding: 72px 20px 40px;
+        align-items: flex-start;
+    }
+
     .about__layout {
-        flex-direction: column-reverse;
-        align-items: center;
-        gap: 36px;
+        flex-direction: column;
+        gap: 28px;
     }
 
     .about__dog {
-        width: 160px;
+        width: 140px;
+        align-self: center;
     }
 
     .about__dog-img {
         aspect-ratio: 1 / 1;
     }
-
-    .about__content {
-        width: 90vw;
-    }
 }
 
-/* Mobile: tutto più compatto */
 @media (max-width: 480px) {
     .about__num {
         font-size: 32px;
     }
 
     .about__dog {
-        width: 120px;
+        width: 110px;
     }
 
     .out-button {
-        top: 16px;
-        right: 16px;
+        top: 14px;
+        right: 14px;
         width: 38px;
         height: 38px;
     }
 
     .about__header {
-        margin-bottom: 28px;
+        margin-bottom: 24px;
     }
-
-    .about__layout {
-        gap: 24px;
-    }
-}
-.seo-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
 }
