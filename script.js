@@ -29,7 +29,10 @@ function init() {
   }
   else if (title.textContent.includes("text")) {
     activeType = "text"
+  }  else if (title.textContent.includes("image")) {
+    activeType = "image"
   }
+
 
 
   typeTabs.forEach(tab => {
