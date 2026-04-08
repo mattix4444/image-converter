@@ -8,6 +8,7 @@ A browser-based file converter available as a live website with a custom domain,
 https://your-simple-converter.vercel.app/
 
 ✨ Features
+
 🖼️ Image conversion: JPG, PNG, WEBP, GIF, BMP, SVG
 📄 Text conversion: TXT, MD, HTML, CSV, JSON, XML, YAML, LOG
 🎬 Video conversion: WEBM and MP4 (re-wrap)
