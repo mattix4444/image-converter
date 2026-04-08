@@ -1,5 +1,0 @@
-https://your-simple-converter.vercel.app/
-https://your-simple-converter.vercel.app/image-converter/
-https://your-simple-converter.vercel.app/text-converter/
-https://your-simple-converter.vercel.app/video-converter/
-https://your-simple-converter.vercel.app/convert-jpeg-to-pngs-free/
