@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="ff53016c-839b-4506-8955-e2a95dd728aa" data-blockingmode="auto" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
     <!--AdSense-->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5287091287037587"
@@ -205,8 +206,15 @@
             </div>
         </div>
 
-        <p id="upload-status" class="status-message" aria-live="polite"></p>
-
+        <!-- Folder and Stats-->
+        <div style="display: flex;">
+            <p id="upload-status" class="status-message" aria-live="polite"></p>
+            <div style="display: flex; margin-left: auto;">
+                <input type="checkbox" id="folder" name="folder" value="folder">
+                <p style="padding-left: 5px;">ENTIRE FOLDER</p>
+            </div>
+        </div>
+        
         <!-- ── Video conversion notice ── -->
         <div class="video-notice" id="video-notice">
             <strong>Note on video conversion:</strong> Video is re-encoded entirely in your browser using the MediaRecorder API.
