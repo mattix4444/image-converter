@@ -12,6 +12,8 @@
     --muted:     #666;
     --accent:    #f5a623;
     --accent-dk: #c07c0a;
+    --accent-bk: #92610c;
+
     --error:     #ff4d4d;
     --success:   #4dff91;
     --font-disp: 'Bebas Neue', sans-serif;
@@ -193,6 +195,23 @@ main {
     overflow: hidden;
     animation: slideIn 0.3s ease;
 }
+
+.open-page{
+    text-decoration: none;
+    color: var(--accent);
+}
+.page-card{
+    background-color: var(--surface);
+    border: var(--accent-bk);
+    border-style: solid;
+    border-radius: 10px;
+    height: 100px;
+    padding: 10px;
+    text-align: left;
+    border-width: 1px;
+    
+}
+.pc:hover { border-color: var(--accent); background: rgba(245,166,35,0.04); }
 
 @keyframes slideIn {
     from { opacity: 0; transform: translateY(8px); }
