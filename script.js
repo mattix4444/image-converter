@@ -19,6 +19,7 @@ let activeType = 'image'
 
 document.addEventListener("DOMContentLoaded", () => {
   init()
+  console.log("started")
 })
 
 function init() {
