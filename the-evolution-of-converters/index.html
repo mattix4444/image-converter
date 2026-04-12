@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JPG vs PNG? — Your Simple Converter</title>
+
+    <link rel="icon" href="../assets/Logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg:        #0e0e0e;
+            --surface:   #161616;
+            --border:    #2a2a2a;
+            --border-hi: #444;
+            --text:      #e8e2d9;
+            --muted:     #666;
+            --accent:    #f5a623;
+            --accent-dk: #c07c0a;
+            --font-disp: 'Bebas Neue', sans-serif;
+            --font-mono: 'DM Mono', monospace;
+            --radius:    4px;
+            --transition: 0.2s cubic-bezier(.4,0,.2,1);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-mono);
+            font-size: 14px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: .045;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 860px;
+            padding: 20px 32px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            border-radius: var(--radius);
+            flex-shrink: 0;
+        }
+
+        .nav-brand {
+            font-family: var(--font-disp);
+            font-size: 20px;
+            letter-spacing: 0.14em;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .nav-brand span { color: var(--accent); }
+
+        /* ── ARTICLE ── */
+        article {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 860px;
+            padding: 52px 32px 0;
+        }
+
+        /* ── HERO ── */
+        .hero-title {
+            font-family: var(--font-disp);
+            font-size: clamp(52px, 10vw, 84px);
+            letter-spacing: 0.05em;
+            color: var(--text);
+            text-align: center;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .hero-author {
+            text-align: center;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        /* ── VS CARD ── */
+        .vs-card {
+            background: #e8e4cc;
+            border-radius: 12px;
+            padding: 40px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 44px;
+            margin-bottom: 60px;
+        }
+
+        .format-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .format-icon {
+            width: 92px; height: 92px;
+            background: var(--bg);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .format-icon svg {
+            width: 48px; height: 48px;
+            color: var(--text);
+        }
+
+        .format-label {
+            font-family: var(--font-disp);
+            font-size: 24px;
+            letter-spacing: 0.1em;
+            color: #1a1a0e;
+        }
+
+        .vs-text {
+            font-family: var(--font-disp);
+            font-size: 30px;
+            color: #1a1a0e;
+            opacity: 0.35;
+        }
+
+        /* ── SECTIONS ── */
+        .section {
+            margin-bottom: 52px;
+        }
+
+        .section h2 {
+            font-family: var(--font-disp);
+            font-size: clamp(30px, 5vw, 44px);
+            letter-spacing: 0.04em;
+            color: var(--text);
+            margin-bottom: 18px;
+            line-height: 1.05;
+        }
+
+        .section p {
+            font-size: 13px;
+            line-height: 1.9;
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+
+        /* ── USE CASES ── */
+        .usecase-label {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .usecase-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 9px 40px;
+        }
+
+        .usecase-item {
+            font-size: 12px;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            letter-spacing: 2px;
+            padding: 2px 7px;
+            border-radius: var(--radius);
+            flex-shrink: 0;
+        }
+
+        .tag.png { border: 1px solid var(--accent); color: var(--accent); }
+        .tag.jpg { border: 1px solid var(--border-hi); color: #888; }
+
+        /* ── SPLIT SECTION ── */
+        .split-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 36px;
+            align-items: start;
+            margin-bottom: 60px;
+        }
+
+        .split-section h2 {
+            font-family: var(--font-disp);
+            font-size: clamp(26px, 4vw, 38px);
+            letter-spacing: 0.04em;
+            color: var(--text);
+            margin-bottom: 16px;
+            line-height: 1.05;
+        }
+
+        .split-section p {
+            font-size: 13px;
+            line-height: 1.9;
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+
+        .split-section img {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            display: block;
+        }
+
+        /* ── CTA ── */
+        .cta-wrap {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 60px 32px 80px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .cta-inner {
+            width: 100%;
+            max-width: 860px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .cta-inner h2 {
+            font-family: var(--font-disp);
+            font-size: clamp(40px, 8vw, 64px);
+            letter-spacing: 0.04em;
+            color: var(--text);
+            margin-bottom: 12px;
+            line-height: 1;
+        }
+
+        .cta-inner p {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.75;
+            margin-bottom: 24px;
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent);
+            color: #000;
+            border: none;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 12px 26px;
+            border-radius: var(--radius);
+            text-decoration: none;
+            cursor: pointer;
+            transition: background var(--transition), gap var(--transition);
+        }
+
+        .btn-cta:hover { background: var(--accent-dk); gap: 14px; }
+
+        .cta-image {
+            width: 160px;
+            height: 160px;
+            object-fit: contain;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            text-align: center;
+            padding: 24px 32px;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 600px) {
+            nav, article { padding-left: 20px; padding-right: 20px; }
+            .split-section { grid-template-columns: 1fr; }
+            .split-section img { order: -1; }
+            .cta-inner { grid-template-columns: 1fr; }
+            .cta-image { width: 110px; height: 110px; }
+            .usecase-grid { grid-template-columns: 1fr; }
+            .cta-wrap { padding: 48px 20px 60px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="noise"></div>
+
+    <!-- NAV -->
+    <nav>
+        <img src="../assets/Logo.png" alt="Your Simple Converter logo" class="nav-logo" />
+        <a href="../" class="nav-brand"><span>File</span> CONVERTER</a>
+    </nav>
+
+    <!-- ARTICLE -->
+    <article>
+
+        <h1 class="hero-title">JPG or PNG?</h1>
+        <p class="hero-author">Author: Mattia Fabbri</p>
+
+        <!-- VS CARD -->
+        <div class="vs-card">
+            <div class="format-box">
+                <div class="format-icon">
+                    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="5" y="5" width="38" height="38" rx="4"/>
+                        <path d="M5 18l10-10 10 10 10-10 8 8"/>
+                        <path d="M5 32l10 10 10-10 10 10 8-8"/>
+                    </svg>
+                </div>
+                <span class="format-label">JPG</span>
+            </div>
+
+            <span class="vs-text">VS</span>
+
+            <div class="format-box">
+                <div class="format-icon">
+                    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="5" y="5" width="38" height="38" rx="4"/>
+                        <path d="M5 18l10-10 10 10 10-10 8 8"/>
+                        <path d="M5 32l10 10 10-10 10 10 8-8"/>
+                    </svg>
+                </div>
+                <span class="format-label">PNG</span>
+            </div>
+        </div>
+
+        <!-- SECTION 1 -->
+        <div class="section">
+            <h2>The simple answer</h2>
+            <p>It depends on what you need the image for. If you need transparency for a website, you're required to use PNG. If you need a lighter file size, go with JPG.</p>
+            <p>In short, PNG supports transparency and delivers better quality but results in a larger file. JPG doesn't support transparency and has lower quality, but the file size is significantly smaller.</p>
+        </div>
+
+        <!-- USE CASES -->
+        <div class="section">
+            <p class="usecase-label">Here's a list of use cases for JPG and PNG</p>
+            <div class="usecase-grid">
+                <div class="usecase-item"><span class="tag png">PNG</span> Editing</div>
+                <div class="usecase-item"><span class="tag jpg">JPG</span> Photography</div>
+                <div class="usecase-item"><span class="tag png">PNG</span> Graphics with color profiles</div>
+                <div class="usecase-item"><span class="tag png">PNG</span> Icons</div>
+                <div class="usecase-item"><span class="tag png">PNG</span> Illustrations</div>
+                <div class="usecase-item"><span class="tag jpg">JPG</span> Lightweight web images</div>
+                <div class="usecase-item"><span class="tag png">PNG</span> Logos</div>
+                <div class="usecase-item"><span class="tag jpg">JPG</span> Social media posts (photos)</div>
+                <div class="usecase-item"><span class="tag jpg">JPG</span> Screenshots</div>
+                <div class="usecase-item"><span class="tag png">PNG</span> Transparent backgrounds</div>
+                <div class="usecase-item"><span class="tag jpg">JPG</span> Photo printing</div>
+                <div class="usecase-item"><span class="tag jpg">JPG</span> Realistic textures</div>
+            </div>
+        </div>
+
+        <!-- SECTION 3 – split -->
+        <div class="split-section">
+            <div>
+                <h2>Why do JPG images lose quality?</h2>
+                <p>When you save a JPG file, the image gets simplified: some of the visual information is discarded to reduce the file size. This compression algorithm removes fine details and makes gradients less precise. Tones and color accuracy are partially lost. The result is a lighter file, but one that's less faithful to the original.</p>
+                <p>This process doesn't happen just once. Every time you open, edit, and re-save a JPG, the compression is applied again. As a result, quality decreases progressively — each save strips away a few more details than the version before.</p>
+            </div>
+            <img src="../assets/jpeg-vs-png.jpg" alt="JPG vs PNG quality comparison" />
+        </div>
+
+    </article>
+
+    <!-- CTA -->
+    <div class="cta-wrap">
+        <div class="cta-inner">
+            <div>
+                <h2>Where to convert?</h2>
+                <p>Convert safely, quickly and for free with Your Simple Converter.</p>
+                <a href="../" class="btn-cta">Convert now →</a>
+            </div>
+            <img src="../assets/jpeg-vs-png.jpg" alt="Your Simple Converter" class="cta-image" />
+        </div>
+    </div>
+
+    <footer>
+        <span>100% client-side — no files are uploaded to servers</span><br /><br />
+        <span>© 2026 Your Simple Converter. All rights reserved.</span>
+    </footer>
+
+</body>
+</html>
